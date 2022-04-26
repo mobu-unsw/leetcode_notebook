@@ -10,3 +10,4 @@ def count(n):
     return r
 count.cache={0:1}
 print(count(50))
+print(count(60))
