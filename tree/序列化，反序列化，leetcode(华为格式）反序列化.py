@@ -42,8 +42,21 @@ class Solution:
         root.right =self.build_dfs(list)
         return root
     #层序反序列bfs
-    def build_bfs(self):
-        pass
+    def build_bfs(self,list):
+        queue = []
+        a = treenode(int(list.pop(0)))
+        queue.append(a)
+        while(queue):
+            temp = queue.pop(0)
+            if temp== 'None':
+                continue
+            x = list.pop(0)
+            temp.left= treenode(int(x)) if x != '#' else 'None'
+            x = list.pop(0)
+            temp.right = treenode(int(x)) if x != '#' else 'None'
+            queue.append(temp.left)
+            queue.append(temp.right)
+        return  a
     def zhongxu(self, root):
         pass
 
@@ -54,7 +67,7 @@ class Solution:
         s = []
         while not route.empty():
             temp=route.get()
-            if temp:
+            if temp and temp!= 'None':
                 s+=[str(temp.data)]
                 route.put(temp.left)
                 route.put(temp.right)
@@ -65,7 +78,7 @@ class Solution:
 
     #前序序列化dfs
     def bianli_dfs(self,root):
-        if root == None:
+        if root == 'None':
             return
         s = []
         s+=[str(root.data)]+[str(self.bianli_dfs(root.left))]+[str(self.bianli_dfs(root.right))]
@@ -103,7 +116,7 @@ def serialize(root):
 
 def deserialize(data):
     tree = data
-    print(tree)
+    # print(tree)
     if tree[0] == 'null':
         return None
     queue = []
@@ -122,19 +135,21 @@ def deserialize(data):
     return root
 huaweicode = [1,2,3,4,'null',2,4,'null','null','null','null',4,'null','null','null']
 # huaweicode =[1,2,3,4,5,6,7]
-root = deserialize(huaweicode)
+# root = deserialize(huaweicode)
 # print(root.right.right.left)
 # print(root.right.left.left)
-print(serialize(root))
+# print(serialize(root))
 #%%
 huaweicode = [1,2,3,4,'#',2,4,'#','#','#','#',4,'#','#','#']
 strcode = '1,2,3,None,None,4,None,None,5,None,None'
 temp = Solution()
-root = temp.buile_huawei(huaweicode,0)
-strtemp =temp.bianli_dfs(root).split(',')
+# root = temp.buile_huawei(huaweicode,0)
+# strtemp =temp.bianli_dfs(root).split(',')
 # print(strtemp)
 # # print(temp.build_dfs(strtemp))
 # root2 = temp.build_dfs(strtemp)
 # print(root2.right.left.left.data)
 # print(temp.bianli_bfs(root))
-
+root = temp.build_bfs(huaweicode)
+print(temp.bianli_bfs(root))
+print(temp.bianli_dfs(root))
